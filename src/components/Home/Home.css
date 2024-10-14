@@ -1,0 +1,10 @@
+.slider {
+  width: 100%;
+  max-width: 800px; /* Cambia el tamaño máximo según sea necesario */
+  margin: auto; /* Centra el carrusel en la página */
+}
+
+.slider img {
+  width: 100%; /* Hace que la imagen ocupe todo el ancho del contenedor */
+  height: auto; /* Mantiene la relación de aspecto de la imagen */
+}

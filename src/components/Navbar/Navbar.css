@@ -1,5 +1,6 @@
 .navbar {
   position: fixed;
+  height: 5.18rem;
   top: 0;
   left: 0;
   width: 100%;
@@ -15,11 +16,16 @@
 .navbar div {
   display: flex;
   gap: 1rem; /* Añade espacio entre los botones */
+  padding-right: 2rem;
 }
 
 .navbar h3 {
   font-size: 2rem;
-  padding-right: 59rem;
+  padding-right: 50rem;
+}
+
+.navbar h3:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
 }
 
 .navbar button {
@@ -36,6 +42,32 @@
 }
 
 .logo {
-  width: 120px; /* Ajusta este valor según el tamaño que quieras */
-  height: auto; /* Mantiene las proporciones */
+  width: auto; /* Ajusta este valor según el tamaño que quieras */
+  height: 5rem; /* Mantiene las proporciones */
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+.cartIcon:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.cartIcon.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

@@ -5,28 +5,6 @@
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
@@ -39,4 +17,43 @@
 
 .read-the-docs {
   color: #888;
+}
+
+/* ----> Clases del archivo base: Vino.jsx, cerveza.jsx, etc.  <--------- */
+
+.product-container {
+  padding: 6rem;
+  text-align: center;
+}
+
+.product-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-around;
+}
+
+/* ----> Clases del archivo detalles: VinoDetalle.jsx, cervezaDetalle.jsx, etc.  <--------- */
+
+.product-detalle-container {
+  max-width: 600px;
+  margin: 8rem;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.product-detalle-img {
+  width: auto;
+  height: 22rem;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+.product-detalle-description {
+  background-color: rgba(60, 60, 60, 0.8);
+  border: 1px solid black;
+  padding: 1rem;
 }
