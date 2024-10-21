@@ -1,8 +1,15 @@
 //import React from "react";
 import PropTypes from "prop-types";
+import { useContext } from "react";
+import { CartContext } from "../../context/CartContext";
 import "./ProductCard.css";
 
 const ProductCard = ({ estilo, marca, precio, imagen, producto }) => {
+  const { addToCart } = useContext(CartContext);
+  const handleAddToCart = () => {
+    addToCart({ estilo, marca, precio, imagen, producto });
+  };
+
   return (
     <div className="product-card">
       <img src={imagen} alt={estilo} className="card-img" />
@@ -10,7 +17,9 @@ const ProductCard = ({ estilo, marca, precio, imagen, producto }) => {
       <p>Estilo: {estilo}</p>
       <p>Precio: {precio}</p>
       <p>Producto: {producto}</p>
-      <button className="add-to-cart-btn">Agregar al carrito 🛒</button>
+      <button className="add-to-cart-btn" onClick={handleAddToCart}>
+        Agregar al carrito 🛒
+      </button>
     </div>
   );
 };

@@ -5,7 +5,6 @@ import productos from "../../data";
 
 const Vinos = () => {
   const vinos = productos.vinos;
-  console.log(vinos);
 
   if (!vinos) {
     console.error("Los vinos no están definidos:", productos);

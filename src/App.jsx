@@ -12,28 +12,31 @@ import VinoDetalle from "./components/Vinos/VinoDetalle";
 import CervezaDetalle from "./components/Cervezas/CervezaDetalle";
 import DestiladoDetalle from "./components/Destilados/DestiladoDetalle";
 import AccesorioDetalle from "./components/Accesorios/AccesorioDetalle";
+import { CartProvider } from "./context/CartContext";
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <NavBar />
-        <Routes>
-          {<Route path="/" element={<Home />} />}
-          {<Route path="/vinos" element={<Vinos />} />}
-          {<Route path="/cervezas" element={<Cervezas />} />}
-          {<Route path="/destilados" element={<Destilados />} />}
-          {<Route path="/accesorios" element={<Accesorios />} />}
-          {<Route path="/nosotros" element={<Nosotros />} />}
-          {<Route path="/vino/:id" element={<VinoDetalle />} />}
-          {<Route path="/cerveza/:id" element={<CervezaDetalle />} />}
-          {<Route path="/destilado/:id" element={<DestiladoDetalle />} />}
-          {<Route path="/accesorio/:id" element={<AccesorioDetalle />} />}
+    <CartProvider>
+      <Router>
+        <div className="App">
+          <NavBar />
+          <Routes>
+            {<Route path="/" element={<Home />} />}
+            {<Route path="/vinos" element={<Vinos />} />}
+            {<Route path="/cervezas" element={<Cervezas />} />}
+            {<Route path="/destilados" element={<Destilados />} />}
+            {<Route path="/accesorios" element={<Accesorios />} />}
+            {<Route path="/nosotros" element={<Nosotros />} />}
+            {<Route path="/vino/:id" element={<VinoDetalle />} />}
+            {<Route path="/cerveza/:id" element={<CervezaDetalle />} />}
+            {<Route path="/destilado/:id" element={<DestiladoDetalle />} />}
+            {<Route path="/accesorio/:id" element={<AccesorioDetalle />} />}
 
-          {<Route path="*" element={<NotFound />} />}
-        </Routes>
-      </div>
-    </Router>
+            {<Route path="*" element={<NotFound />} />}
+          </Routes>
+        </div>
+      </Router>
+    </CartProvider>
   );
 }
 
