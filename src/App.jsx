@@ -13,6 +13,7 @@ import CervezaDetalle from "./components/Cervezas/CervezaDetalle";
 import DestiladoDetalle from "./components/Destilados/DestiladoDetalle";
 import AccesorioDetalle from "./components/Accesorios/AccesorioDetalle";
 import { CartProvider } from "./context/CartContext";
+import CartPage from "./components/CartWidget/CartPage";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             {<Route path="/destilados" element={<Destilados />} />}
             {<Route path="/accesorios" element={<Accesorios />} />}
             {<Route path="/nosotros" element={<Nosotros />} />}
+            {<Route path="/carrito" element={<CartPage />} />}
             {<Route path="/vino/:id" element={<VinoDetalle />} />}
             {<Route path="/cerveza/:id" element={<CervezaDetalle />} />}
             {<Route path="/destilado/:id" element={<DestiladoDetalle />} />}

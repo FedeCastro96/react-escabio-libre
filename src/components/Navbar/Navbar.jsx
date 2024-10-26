@@ -19,14 +19,14 @@ const NavBar = () => {
       <h3 onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
         Escabio Libre{" "}
       </h3>
-      <div>
+      <div className="btns-navbar-div">
         <button onClick={() => navigate("/Vinos")}>Vinos</button>
         <button onClick={() => navigate("/Cervezas")}>Cervezas</button>
         <button onClick={() => navigate("/Destilados")}>Destilados</button>
         <button onClick={() => navigate("/Accesorios")}>Accesorios</button>
         <button onClick={() => navigate("/Nosotros")}>Nosotros</button>
+        <CartWidget />
       </div>
-      <CartWidget />
     </nav>
   );
 };

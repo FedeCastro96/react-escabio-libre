@@ -16,7 +16,10 @@
 .navbar div {
   display: flex;
   gap: 1rem; /* Añade espacio entre los botones */
-  padding-right: 2rem;
+}
+
+.btns-navbar-div {
+  padding-right: 1.8rem;
 }
 
 .navbar h3 {
@@ -70,4 +73,13 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.cart-count {
+  font-weight: 800;
+  background-color: #4a4949;
+  color: white;
+  border-radius: 20%;
+
+  padding: 0.3rem 0.6rem; /* Ajusta el padding según sea necesario */
 }

@@ -1,21 +1,23 @@
 import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
-import cart from "./assets/cart.png";
-import "./CartWidget.css"; // Si tienes estilos para el carrito, asegúrate de importarlos
+import "../Navbar/Navbar.css";
+import { useNavigate } from "react-router-dom";
 
 const CartWidget = () => {
   const { cartItems } = useContext(CartContext);
   const itemCount = cartItems.length;
 
+  const navigate = useNavigate();
+
   console.log("Cart items: ", cartItems);
 
   return (
-    <div>
-      <img className="cartIcon" src={cart} alt="cart-widget" />
-      <div className="cart-div">
-        {itemCount > 0 && <span className="cart-count">{itemCount}</span>}
-      </div>
-    </div>
+    <>
+      <button className="cartIcon" onClick={() => navigate("/carrito")}>
+        🛒
+      </button>
+      {itemCount > 0 && <span className="cart-count">{itemCount}</span>}
+    </>
   );
 };
 
