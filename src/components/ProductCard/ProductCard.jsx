@@ -5,8 +5,13 @@ import { CartContext } from "../../context/CartContext";
 import "./ProductCard.css";
 
 const ProductCard = ({ estilo, marca, precio, imagen, producto }) => {
-  const { addToCart } = useContext(CartContext);
-  const handleAddToCart = () => {
+  const { addToCart, cartItems } = useContext(CartContext);
+
+  const handleAddToCart = (e) => {
+    e.preventDefault(); // previene la navegación
+    e.stopPropagation(); // Detiene la propagacaión del evento
+    console.log("botón clickeado");
+    console.log("Estado actual del carrito antes de agregar:", cartItems);
     addToCart({ estilo, marca, precio, imagen, producto });
   };
 
