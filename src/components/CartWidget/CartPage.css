@@ -1,32 +1,37 @@
 .carrito-container {
   max-width: 1200px;
   padding: 20px;
-  border: 1px solid white;
+  border: 2px solid white;
   border-radius: 2%;
   margin-top: 7rem;
+  background-color: rgba(62, 61, 61, 0.406);
 }
 
 .carrito-vacio {
   text-align: center;
-  padding: 50px;
+  padding: 5rem;
+}
+
+.carrito-vacio-img {
+  width: 50%;
 }
 
 .carrito-items {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 0.8rem;
   max-height: 35rem;
   width: 60rem;
   overflow-y: auto;
   padding-right: 1.5rem;
-  border: 1px solid salmon;
 }
 
 .carrito-item {
   display: flex;
   flex-direction: row;
-  border: 1px solid #1426c5;
+  border: 2px solid #ffffff;
   border-radius: 8px;
+  background-color: #242424;
   cursor: pointer;
   margin: 0.5rem;
 }
@@ -40,7 +45,7 @@
 
 .item-details {
   flex-grow: 1;
-  border: 1px solid green;
+  background-color: #242424;
   display: flex;
   flex-direction: row;
   align-items: center;
