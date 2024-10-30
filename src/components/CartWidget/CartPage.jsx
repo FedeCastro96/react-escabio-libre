@@ -4,7 +4,7 @@ import "./CartPage.css";
 import carritoVacio from "./assets/carrito-vacio.png";
 
 const CartPage = () => {
-  const { cartItems } = useContext(CartContext);
+  const { cartItems, removeFromCart } = useContext(CartContext);
   // Accedemos a los items del carrito usando el contexto CartContext.
 
   const [counts, setCounts] = useState(cartItems.map(() => 1));
@@ -62,7 +62,6 @@ const CartPage = () => {
               <h3>
                 {item.producto}: {item.estilo} - {item.marca}
               </h3>
-              <p></p>
               <div className="cantidad">
                 <p>
                   <b>Cantidad:</b> {counts[index]}
@@ -81,9 +80,13 @@ const CartPage = () => {
                   +
                 </button>
               </div>
+
               <p>
                 <b>Total:</b> ${item.precio * counts[index]}
               </p>
+              <div className="eliminar-item">
+                <button onClick={() => removeFromCart(index)}>❌</button>
+              </div>
             </div>
           </div>
         ))}

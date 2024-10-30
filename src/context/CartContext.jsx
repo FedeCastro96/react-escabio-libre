@@ -21,13 +21,17 @@ export const CartProvider = ({ children }) => {
     });
   };
 
+  const removeFromCart = (index) => {
+    setCartItems((prevItems) => prevItems.filter((_, i) => i !== index));
+  };
+
   // Efecto para monitorear cambios en cartItems
   useEffect(() => {
     console.log("Estado actual del carrito:", cartItems); // Imprimimos el estado actual del carrito cada vez que este cambie.
   }, [cartItems]); // El efecto se ejecutará cada vez que cambie 'cartItems' (es la dependencia).
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart }}>
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart }}>
       {children}
     </CartContext.Provider>
   );
