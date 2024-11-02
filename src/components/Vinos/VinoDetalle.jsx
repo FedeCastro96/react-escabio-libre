@@ -7,7 +7,7 @@ import { CartContext } from "../../context/CartContext";
 const VinoDetalle = () => {
   const { id } = useParams();
   const { addToCart } = useContext(CartContext);
-  const vino = productos.vinos.find((producto) => producto.id === parseInt(id));
+  const vino = productos.vinos.find((producto) => producto.id === id);
   const { estilo, marca, precio, imagen, descripcion, producto } = vino;
   const handleAddToCart = () => {
     addToCart(vino); // Llamar a la función addToCart pasando el producto

@@ -19,9 +19,16 @@ const ProductCard = ({ estilo, marca, precio, imagen, producto }) => {
     <div className="product-card">
       <img src={imagen} alt={estilo} className="card-img" />
       <h3>{marca}</h3>
-      <p>Estilo: {estilo}</p>
-      <p>Precio: {precio}</p>
-      <p>Producto: {producto}</p>
+      <p>
+        <b>Estilo:</b> {estilo} 🍇
+      </p>
+      <p>
+        <b>Precio: $</b>
+        {precio}
+      </p>
+      <p>
+        <b>Producto:</b> {producto}
+      </p>
       <button className="add-to-cart-btn" onClick={handleAddToCart}>
         Agregar al carrito 🛒
       </button>

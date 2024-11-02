@@ -24,6 +24,7 @@ const Vinos = () => {
               imagen={vino.imagen}
               producto={vino.producto}
               descripcion={vino.descripcion}
+              id={vino.id}
             />
           </Link>
         ))}

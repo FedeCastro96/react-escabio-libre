@@ -17,7 +17,7 @@ import CopaRiedel from "./images/Copa-Riedel.jpg";
 const productos = {
   vinos: [
     {
-      id: 1,
+      id: "WyKXWbN15m4bwRcwX441",
       producto: "Vino",
       estilo: "Malbec",
       marca: "Trapiche",
@@ -27,7 +27,7 @@ const productos = {
         "Un vino Malbec de la bodega Trapiche, ideal para carnes rojas.",
     },
     {
-      id: 2,
+      id: "uHwkOorNStpYcKLG5Zga",
       producto: "Vino",
       estilo: "Cabernet Sauvignon",
       marca: "Rutini",
@@ -36,7 +36,7 @@ const productos = {
       descripcion: "Cabernet Sauvignon de Rutini, un clásico con cuerpo.",
     },
     {
-      id: 3,
+      id: "NhWrZBuaCUAC2OCaDMkZ",
       producto: "Vino",
       estilo: "Malbec",
       marca: "Norton",
