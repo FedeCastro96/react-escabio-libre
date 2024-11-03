@@ -14,8 +14,6 @@ import DestiladoDetalle from "./components/Destilados/DestiladoDetalle";
 import AccesorioDetalle from "./components/Accesorios/AccesorioDetalle";
 import { CartProvider } from "./context/CartContext";
 import CartPage from "./components/CartWidget/CartPage";
-import Vinos2 from "./components/Vinos2/Vinos2";
-import VinoDetalle2 from "./components/Vinos2/VinoDetalle2";
 
 function App() {
   return (
@@ -26,14 +24,12 @@ function App() {
           <Routes>
             {<Route path="/" element={<Home />} />}
             {<Route path="/vinos" element={<Vinos />} />}
-            {<Route path="/vinos2" element={<Vinos2 />} />}
             {<Route path="/cervezas" element={<Cervezas />} />}
             {<Route path="/destilados" element={<Destilados />} />}
             {<Route path="/accesorios" element={<Accesorios />} />}
             {<Route path="/nosotros" element={<Nosotros />} />}
             {<Route path="/carrito" element={<CartPage />} />}
-            {<Route path="/vino/:id" element={<VinoDetalle />} />}
-            {<Route path="/vino2/:id" element={<VinoDetalle2 />} />}
+            {<Route path="/vinos/:id" element={<VinoDetalle />} />}
             {<Route path="/cerveza/:id" element={<CervezaDetalle />} />}
             {<Route path="/destilado/:id" element={<DestiladoDetalle />} />}
             {<Route path="/accesorio/:id" element={<AccesorioDetalle />} />}

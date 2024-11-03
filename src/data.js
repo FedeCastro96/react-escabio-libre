@@ -48,7 +48,7 @@ const productos = {
 
   cervezas: [
     {
-      id: 4,
+      id: "oddAtaNOv9KNymuse8DY",
       producto: "Cerveza",
       estilo: "IPA",
       marca: "Patagonia",
@@ -57,7 +57,7 @@ const productos = {
       descripcion: "Cerveza IPA de Patagonia, con notas cítricas y amargas.",
     },
     {
-      id: 5,
+      id: "vx28BsIisahXHalEl91q",
       producto: "Cerveza",
       estilo: "Lager",
       marca: "Quilmes",
@@ -66,7 +66,7 @@ const productos = {
       descripcion: "Cerveza Lager clásica de Quilmes, refrescante y ligera.",
     },
     {
-      id: 6,
+      id: "4GEXnuvB4P8a0racVgmI",
       producto: "Cerveza",
       estilo: "Stout",
       marca: "Imperial",

@@ -2,26 +2,43 @@ import "../../App.css";
 import ProductCard from "../ProductCard/ProductCard";
 import { Link } from "react-router-dom";
 import productos from "../../data";
+import { collection, getDocs } from "firebase/firestore";
+import BBDD from "../../Config/firebase";
+import { useEffect, useState } from "react";
 
 const Vinos = () => {
-  const vinos = productos.vinos;
+  const [vinos, setVinos] = useState([]);
+  useEffect(() => {
+    // Obtener los vinos desde Firestore
+    const collectionRef = collection(BBDD.db, "vinos");
+    getDocs(collectionRef).then((snaps) => {
+      const { docs } = snaps;
+      const list = docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+      console.log("list:", list);
+      setVinos(list);
+    });
+  }, []);
 
-  if (!vinos) {
-    console.error("Los vinos no están definidos:", productos);
-    return <div>Error: No se encontraron vinos.</div>; // Mensaje de error
-  }
+  //tengo que usar esta formula para encontrar la imagen del vino ya que no sé como subirla a firestore.
+  // esta formula busca los vinos que trae el array de data.js y busca por ID
+  const obtenerImagenVino = (id) => {
+    console.log("vinos -> firestore", vinos);
+    console.log("vinos -> array js", productos.vinos);
+    const vinoEncontrado = productos.vinos.find((vino) => vino.id === id);
+    return vinoEncontrado ? vinoEncontrado.imagen : null;
+  };
 
   return (
     <div className="product-container">
       <h1>Vinos</h1>
       <div className="product-grid">
         {vinos.map((vino) => (
-          <Link key={vino.id} to={`/vino/${vino.id}`} state={{ ...vino }}>
+          <Link key={vino.id} to={`/vinos/${vino.id}`} state={{ ...vino }}>
             <ProductCard
               estilo={vino.estilo}
               marca={vino.marca}
+              imagen={obtenerImagenVino(vino.id)}
               precio={vino.precio}
-              imagen={vino.imagen}
               producto={vino.producto}
               descripcion={vino.descripcion}
               id={vino.id}
