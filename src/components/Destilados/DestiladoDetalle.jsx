@@ -1,34 +1,52 @@
 import { useParams } from "react-router-dom";
 import productos from "../../data";
 import "../../App.css";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../../context/CartContext";
+import BBDD from "../../Config/firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 const DestiladoDetalle = () => {
   const { id } = useParams();
   const { addToCart } = useContext(CartContext);
-  const destilado = productos.destilados.find(
-    (producto) => producto.id === parseInt(id)
-  );
+  const [destilados, setDestilados] = useState(null);
 
-  const handleAddToCart = () => {
-    addToCart(destilado); // Llamar a la función addToCart pasando el producto
-    console.log("Adding to cart: ", {
-      estilo,
-      marca,
-      precio,
-      imagen,
-      producto,
+  useEffect(() => {
+    const docRef = doc(BBDD.db, "destilados", id);
+    getDoc(docRef).then((snap) => {
+      setDestilados(snap.data());
     });
+  }, [id]);
+
+  const obtenerImagenDestilado = (id) => {
+    const destiladoEncontrado = productos.destilados.find(
+      (destilado) => destilado.id === id
+    );
+    return destiladoEncontrado ? destiladoEncontrado.imagen : null;
   };
 
-  const { estilo, marca, precio, imagen, descripcion, producto } = destilado;
+  if (!destilados) {
+    return <p>Cargando...</p>;
+  }
+
+  const ImagenDestilado = obtenerImagenDestilado(id);
+
+  const { estilo, marca, precio, descripcion, producto } = destilados;
+
+  const handleAddToCart = () => {
+    const destiladoConImagen = {
+      ...destilados,
+      imagen: ImagenDestilado,
+    };
+    addToCart(destiladoConImagen);
+  };
+
   return (
     <div className="product-detalle-container">
       <h2>
         {producto} {marca} {estilo}
       </h2>
-      <img src={imagen} alt={estilo} className="product-detalle-img" />
+      <img src={ImagenDestilado} alt={estilo} className="product-detalle-img" />
       <p>Precio: ${precio}</p>
       <button className="add-to-cart-btn" onClick={handleAddToCart}>
         Agregar al carrito 🛒

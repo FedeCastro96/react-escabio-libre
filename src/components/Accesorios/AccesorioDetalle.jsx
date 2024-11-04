@@ -1,27 +1,44 @@
 import { useParams } from "react-router-dom";
 import productos from "../../data";
 import "../../App.css";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../../context/CartContext";
+import BBDD from "../../Config/firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 const AccesorioDetalle = () => {
   const { id } = useParams();
   const { addToCart } = useContext(CartContext);
+  const [accesorios, setAccesorios] = useState(null);
 
-  const accesorio = productos.accesorios.find(
-    (producto) => producto.id === parseInt(id)
-  );
-  const { estilo, marca, precio, imagen, descripcion, producto } = accesorio;
+  useEffect(() => {
+    const docRef = doc(BBDD.db, "accesorios", id);
+    getDoc(docRef).then((snap) => {
+      setAccesorios(snap.data());
+    });
+  }, [id]);
+
+  const obtenerImagenAccesorio = (id) => {
+    const accesorioEncontrado = productos.accesorios.find(
+      (accesorio) => accesorio.id === id
+    );
+    return accesorioEncontrado ? accesorioEncontrado.imagen : null;
+  };
+
+  if (!accesorios) {
+    return <p>Cargando...</p>;
+  }
+
+  const ImagenAccesorio = obtenerImagenAccesorio(id);
+
+  const { estilo, marca, precio, descripcion, producto } = accesorios;
 
   const handleAddToCart = () => {
-    addToCart(accesorio);
-    console.log("Adding to cart:", {
-      estilo,
-      marca,
-      precio,
-      imagen,
-      producto,
-    });
+    const accesorioConImagen = {
+      ...accesorios,
+      imagen: ImagenAccesorio,
+    };
+    addToCart(accesorioConImagen);
   };
 
   return (
@@ -29,7 +46,7 @@ const AccesorioDetalle = () => {
       <h2>
         {producto} {marca} {estilo}
       </h2>
-      <img src={imagen} alt={estilo} className="product-detalle-img" />
+      <img src={ImagenAccesorio} alt={estilo} className="product-detalle-img" />
       <p>Precio: ${precio}</p>
       <button className="add-to-cart-btn" onClick={handleAddToCart}>
         Agregar al carrito 🛒

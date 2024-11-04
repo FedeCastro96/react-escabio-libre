@@ -2,20 +2,34 @@ import "../../App.css";
 import ProductCard from "../ProductCard/ProductCard";
 import { Link } from "react-router-dom";
 import productos from "../../data";
+import { collection, getDocs } from "firebase/firestore";
+import BBDD from "../../Config/firebase";
+import { useEffect, useState } from "react";
 
 const Accesorios = () => {
-  const accesorios = productos.accesorios;
+  const [accessorios, setAccesorios] = useState([]);
+  useEffect(() => {
+    const collectionRef = collection(BBDD.db, "accesorios");
+    getDocs(collectionRef).then((snaps) => {
+      const { docs } = snaps;
+      const list = docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+      console.log("accsesorios list:", list);
+      setAccesorios(list);
+    });
+  }, []);
 
-  if (!accesorios) {
-    console.error("Los accesorios no están definidos:", productos);
-    return <div>Error: No se encontraron accesorios.</div>; // Mensaje de error
-  }
+  const obtenerImagenAccesorio = (id) => {
+    const accesorioEncontrado = productos.accesorios.find(
+      (accesorio) => accesorio.id === id
+    );
+    return accesorioEncontrado ? accesorioEncontrado.imagen : null;
+  };
 
   return (
     <div className="product-container">
       <h1>Accesorios</h1>
       <div className="product-grid">
-        {accesorios.map((accesorio) => (
+        {accessorios.map((accesorio) => (
           <Link
             key={accesorio.id}
             to={`/accesorio/${accesorio.id}`}
@@ -25,7 +39,7 @@ const Accesorios = () => {
               estilo={accesorio.estilo}
               marca={accesorio.marca}
               precio={accesorio.precio}
-              imagen={accesorio.imagen}
+              imagen={obtenerImagenAccesorio(accesorio.id)}
               producto={accesorio.producto}
               descripcion={accesorio.descripcion}
             />

@@ -79,7 +79,7 @@ const productos = {
 
   destilados: [
     {
-      id: 7,
+      id: "YcRN187eeC35g81fM5Cu",
       producto: "Destilado",
       estilo: "Whisky",
       marca: "Johnnie Walker Black Label",
@@ -88,7 +88,7 @@ const productos = {
       descripcion: "Whisky escocés de mezcla con 12 años de añejamiento.",
     },
     {
-      id: 8,
+      id: "BdnfriknjlEbTAtFq3EA",
       producto: "Destilado",
       estilo: "Vodka",
       marca: "Absolut",
@@ -97,7 +97,7 @@ const productos = {
       descripcion: "Vodka sueco de alta pureza, ideal para cócteles.",
     },
     {
-      id: 9,
+      id: "jT6YGnItsaHg34U6dNBY",
       producto: "Destilado",
       estilo: "Tequila",
       marca: "José Cuervo Especial",
@@ -106,7 +106,7 @@ const productos = {
       descripcion: "Tequila dorado de José Cuervo, con sabor suave y dulce.",
     },
     {
-      id: 10,
+      id: "pZOEbRx9NizTUrNqkp3u",
       producto: "Destilado",
       estilo: "Ron",
       marca: "Havana Club Añejo",
@@ -118,7 +118,7 @@ const productos = {
 
   accesorios: [
     {
-      id: 11,
+      id: "qOZ9hHtPm4Y7LhKKh3hc",
       producto: "Accesorio",
       estilo: "Destapador",
       marca: "Heineken",
@@ -127,7 +127,7 @@ const productos = {
       descripcion: "Destapador de acero inoxidable con el logo de Heineken.",
     },
     {
-      id: 12,
+      id: "x3yesRsDOQ1jpIguZfwj",
       producto: "Accesorio",
       estilo: "Vaso Cervecero",
       marca: "Stella Artois",
@@ -137,7 +137,7 @@ const productos = {
         "Vaso cervecero oficial de Stella Artois, capacidad de 500 ml.",
     },
     {
-      id: 13,
+      id: "5AoHeVNZHACoHnzHNt5v",
       producto: "Accesorio",
       estilo: "Posa Vasos",
       marca: "Corona",
@@ -147,7 +147,7 @@ const productos = {
         "Set de 4 posa vasos de corcho con diseño de la marca Corona.",
     },
     {
-      id: 14,
+      id: "sFGBG4LfXN1t2jva3Rd1",
       producto: "Accesorio",
       estilo: "Shaker",
       marca: "Bacardi",
@@ -156,7 +156,7 @@ const productos = {
       descripcion: "Shaker metálico Bacardi para preparar cócteles.",
     },
     {
-      id: 15,
+      id: "G229s1oYKY0jznfKEwh7",
       producto: "Accesorio",
       estilo: "Copa de Vino",
       marca: "Riedel",

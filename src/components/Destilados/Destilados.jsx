@@ -2,14 +2,28 @@ import "../../App.css";
 import ProductCard from "../ProductCard/ProductCard";
 import { Link } from "react-router-dom";
 import productos from "../../data";
+import { collection, getDocs } from "firebase/firestore";
+import BBDD from "../../Config/firebase";
+import { useEffect, useState } from "react";
 
 const Destilados = () => {
-  const destilados = productos.destilados;
+  const [destilados, setDestilados] = useState([]);
+  useEffect(() => {
+    const collectionRef = collection(BBDD.db, "destilados");
+    getDocs(collectionRef).then((snaps) => {
+      const { docs } = snaps;
+      const list = docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+      console.log("destilados list:", list);
+      setDestilados(list);
+    });
+  }, []);
 
-  if (!destilados) {
-    console.error("Los destilados no están definidos:", productos);
-    return <div>Error: No se encontraron destilados.</div>; // Mensaje de error
-  }
+  const obtenerImagenDestilado = (id) => {
+    const destiladoEncontrado = productos.destilados.find(
+      (destilado) => destilado.id === id
+    );
+    return destiladoEncontrado ? destiladoEncontrado.imagen : null;
+  };
 
   return (
     <div className="product-container">
@@ -25,7 +39,7 @@ const Destilados = () => {
               estilo={destilado.estilo}
               marca={destilado.marca}
               precio={destilado.precio}
-              imagen={destilado.imagen}
+              imagen={obtenerImagenDestilado(destilado.id)}
               producto={destilado.producto}
               descripcion={destilado.descripcion}
             />

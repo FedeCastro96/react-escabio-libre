@@ -20,7 +20,7 @@ const ProductCard = ({ estilo, marca, precio, imagen, producto }) => {
       <img src={imagen} alt={estilo} className="card-img" />
       <h3>{marca}</h3>
       <p>
-        <b>Estilo:</b> {estilo} 🍇
+        <b>Estilo:</b> {estilo}
       </p>
       <p>
         <b>Precio: $</b>
