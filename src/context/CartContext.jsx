@@ -1,5 +1,10 @@
 import { createContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import {
+  createOrderInFirestore,
+  fetchCartFromFirestore,
+  updateCartInFirestore,
+} from "./../firebaseFunctions";
 
 // Creamos un contexto llamado CartContext, que servirá para compartir el estado del carrito entre diferentes componentes del app.
 export const CartContext = createContext();
@@ -8,30 +13,54 @@ export const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   // Definimos el estado 'cartItems' que contiene los productos agregados al carrito.
-  // Inicialmente es un array vacío.
+
+  // Efecto para cargar el carrito desde Firestore al montar el componente
+  useEffect(() => {
+    const loadCart = async () => {
+      try {
+        const items = await fetchCartFromFirestore(); // Llamamos a la función que obtiene los productos del carrito desde Firestore
+        console.log("Elementos del carrito cargados desde firestore:", items);
+        setCartItems(items);
+      } catch (error) {
+        console.error("Error al cargar el carrito desde firestore:", error);
+      }
+    };
+
+    loadCart();
+  }, []);
 
   // Función para agregar un producto al carrito
   const addToCart = (product) => {
-    console.log("Intentando agregar producto:", product); // Log para debugging
-
     setCartItems((prevItems) => {
-      const newItems = [...prevItems, product]; //Creamos un nuevo array que contiene los productos anteriores y el nuevo producto.
-      console.log("Nuevo estado del carrito:", newItems); // Log para debugging
-      return newItems; // Retornamos el nuevo estado del carrito
+      const newItems = [...prevItems, product];
+      updateCartInFirestore(newItems);
+      return newItems;
     });
   };
 
   const removeFromCart = (index) => {
-    setCartItems((prevItems) => prevItems.filter((_, i) => i !== index));
+    setCartItems((prevItems) => {
+      const newItems = prevItems.filter((_, i) => i !== index);
+      updateCartInFirestore(newItems); //actualizamos firestore con el nuevo carrito
+      return newItems;
+    });
   };
 
-  // Efecto para monitorear cambios en cartItems
-  useEffect(() => {
-    console.log("Estado actual del carrito:", cartItems); // Imprimimos el estado actual del carrito cada vez que este cambie.
-  }, [cartItems]); // El efecto se ejecutará cada vez que cambie 'cartItems' (es la dependencia).
+  const handlePurchase = async () => {
+    try {
+      const orderId = await createOrderInFirestore(cartItems);
+      console.log(`Compra realizada con éxito. ID de la orden: ${orderId}`);
+      setCartItems([]);
+      return orderId;
+    } catch (error) {
+      console.error("error al realizar la compra: ", error);
+    }
+  };
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart }}>
+    <CartContext.Provider
+      value={{ cartItems, addToCart, removeFromCart, handlePurchase }}
+    >
       {children}
     </CartContext.Provider>
   );
