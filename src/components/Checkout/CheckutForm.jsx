@@ -1,5 +1,6 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
+import "./CheckoutForm.css";
 
 const CheckoutForm = ({ onCompleteOrder }) => {
   const [email, setEmail] = useState("");
@@ -17,8 +18,9 @@ const CheckoutForm = ({ onCompleteOrder }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="checkout-form" onSubmit={handleSubmit}>
       <div>
+        <h2>Complete con sus datos:</h2>
         <label htmlFor="email">Email:</label>
         <input
           type="email"
@@ -45,7 +47,9 @@ const CheckoutForm = ({ onCompleteOrder }) => {
           onChange={(e) => setPhoneNumber(e.target.value)}
         />
       </div>
-      <button type="submit">Completar Compra</button>
+      <div>
+        <button type="submit">Completar Compra</button>
+      </div>
     </form>
   );
 };
