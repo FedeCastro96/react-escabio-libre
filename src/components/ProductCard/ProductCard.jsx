@@ -3,16 +3,20 @@ import PropTypes from "prop-types";
 import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
 import "./ProductCard.css";
+//import { addToCartInFirestore } from "../../firebaseFunctions";
 
-const ProductCard = ({ estilo, marca, precio, imagen, producto }) => {
+const ProductCard = ({ estilo, marca, precio, imagen, producto, id }) => {
   const { addToCart, cartItems } = useContext(CartContext);
 
-  const handleAddToCart = (e) => {
+  const handleAddToCart = async (e) => {
     e.preventDefault(); // previene la navegación
     e.stopPropagation(); // Detiene la propagacaión del evento
-    console.log("botón clickeado");
     console.log("Estado actual del carrito antes de agregar:", cartItems);
-    addToCart({ estilo, marca, precio, imagen, producto });
+
+    const newProduct = { estilo, marca, precio, imagen, producto, id };
+
+    // Actualizar el carrito localmente primero
+    addToCart(newProduct);
   };
 
   return (
@@ -42,6 +46,7 @@ ProductCard.propTypes = {
   precio: PropTypes.number.isRequired,
   imagen: PropTypes.string.isRequired,
   producto: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default ProductCard;

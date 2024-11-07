@@ -1,14 +1,14 @@
 import { useParams } from "react-router-dom";
 import productos from "../../data";
 import "../../App.css";
-import { useContext, useEffect, useState } from "react";
-import { CartContext } from "../../context/CartContext";
+import { useEffect, useState } from "react";
+
 import BBDD from "../../Config/firebase";
 import { doc, getDoc } from "firebase/firestore";
 
 const CervezaDetalle = () => {
   const { id } = useParams();
-  const { addToCart } = useContext(CartContext);
+
   const [cervezas, setCervezas] = useState(null);
 
   useEffect(() => {
@@ -33,15 +33,6 @@ const CervezaDetalle = () => {
 
   const { estilo, marca, precio, descripcion, producto } = cervezas;
 
-  const handleAddToCart = () => {
-    const cervezaConImagen = {
-      ...cervezas,
-      imagen: ImagenCerveza,
-    };
-
-    addToCart(cervezaConImagen);
-  };
-
   return (
     <div className="product-detalle-container">
       <h2>
@@ -49,9 +40,6 @@ const CervezaDetalle = () => {
       </h2>
       <img src={ImagenCerveza} alt={estilo} className="product-detalle-img" />
       <p>Precio: ${precio}</p>
-      <button className="add-to-cart-btn" onClick={handleAddToCart}>
-        Agregar al carrito 🛒
-      </button>
       <p className="product-detalle-description">{descripcion}</p>
     </div>
   );

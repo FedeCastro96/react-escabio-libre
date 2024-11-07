@@ -22,8 +22,6 @@ const Vinos = () => {
   //tengo que usar esta formula para encontrar la imagen del vino ya que no sé como subirla a firestore.
   // esta formula busca los vinos que trae el array de data.js y busca por ID
   const obtenerImagenVino = (id) => {
-    console.log("vinos -> firestore", vinos);
-    console.log("vinos -> array js", productos.vinos);
     const vinoEncontrado = productos.vinos.find((vino) => vino.id === id);
     return vinoEncontrado ? vinoEncontrado.imagen : null;
   };

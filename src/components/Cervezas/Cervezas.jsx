@@ -45,6 +45,7 @@ const Cervezas = () => {
               imagen={obtenerImagenCerveza(cerveza.id)}
               producto={cerveza.producto}
               descripcion={cerveza.descripcion}
+              id={cerveza.id}
             />
           </Link>
         ))}

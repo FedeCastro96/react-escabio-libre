@@ -42,6 +42,7 @@ const Accesorios = () => {
               imagen={obtenerImagenAccesorio(accesorio.id)}
               producto={accesorio.producto}
               descripcion={accesorio.descripcion}
+              id={accesorio.id}
             />
           </Link>
         ))}

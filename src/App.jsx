@@ -14,6 +14,7 @@ import DestiladoDetalle from "./components/Destilados/DestiladoDetalle";
 import AccesorioDetalle from "./components/Accesorios/AccesorioDetalle";
 import { CartProvider } from "./context/CartContext";
 import CartPage from "./components/CartWidget/CartPage";
+import Checkout from "./components/Checkout/Checkout";
 
 function App() {
   return (
@@ -33,7 +34,7 @@ function App() {
             {<Route path="/cerveza/:id" element={<CervezaDetalle />} />}
             {<Route path="/destilado/:id" element={<DestiladoDetalle />} />}
             {<Route path="/accesorio/:id" element={<AccesorioDetalle />} />}
-
+            {<Route path="/checkout" element={<Checkout />} />}
             {<Route path="*" element={<NotFound />} />}
           </Routes>
         </div>

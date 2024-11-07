@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {
   createOrderInFirestore,
   fetchCartFromFirestore,
-  updateCartInFirestore,
+  //updateCartInFirestore,
 } from "./../firebaseFunctions";
 
 // Creamos un contexto llamado CartContext, que servirá para compartir el estado del carrito entre diferentes componentes del app.
@@ -30,20 +30,25 @@ export const CartProvider = ({ children }) => {
   }, []);
 
   // Función para agregar un producto al carrito
-  const addToCart = (product) => {
+  const addToCart = (newItem) => {
     setCartItems((prevItems) => {
-      const newItems = [...prevItems, product];
-      updateCartInFirestore(newItems);
-      return newItems;
+      // Verificar si el item ya existe en el carrito
+      const existingItemIndex = prevItems.find(
+        (item) => item.id === newItem.id
+      );
+
+      if (existingItemIndex) {
+        // Si el item ya existe, no lo agregamos de nuevo
+        return prevItems;
+      }
+
+      // Si el item no existe, lo agregamos al carrito
+      return [...prevItems, newItem];
     });
   };
 
   const removeFromCart = (index) => {
-    setCartItems((prevItems) => {
-      const newItems = prevItems.filter((_, i) => i !== index);
-      updateCartInFirestore(newItems); //actualizamos firestore con el nuevo carrito
-      return newItems;
-    });
+    setCartItems((prevItems) => prevItems.filter((_, i) => i !== index));
   };
 
   const handlePurchase = async () => {

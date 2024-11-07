@@ -1,28 +1,93 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
+import {
+  removeFromCartInFirestore,
+  updateCartInFirestore,
+} from "../../firebaseFunctions"; // Importamos funciones para Firestore
 import { CartContext } from "../../context/CartContext";
 import "./CartPage.css";
 import carritoVacio from "./assets/carrito-vacio.png";
+import { useNavigate } from "react-router-dom";
 
 const CartPage = () => {
-  const { cartItems, removeFromCart } = useContext(CartContext);
+  //llamo a usenavigate para usarlo despues en el botón de comprar
+  const navigate = useNavigate();
+
   // Accedemos a los items del carrito usando el contexto CartContext.
+  const { cartItems, removeFromCart } = useContext(CartContext);
 
-  const [counts, setCounts] = useState(cartItems.map(() => 1));
-  // Creamos un estado 'counts' que es un array donde cada posición representa la cantidad de un item en el carrito.
-  // Inicializamos 'counts' con un array que contiene un '1' por cada item en 'cartItems', lo que significa que cada producto comienza con una cantidad de 1.
+  // Inicializamos counts como un objeto que mapea IDs de productos a sus cantidades
+  const [counts, setCounts] = useState({});
 
-  const handleIncrement = (index) => {
-    const newCounts = [...counts]; // Copiamos el array actual de cantidades para no modificar directamente el estado.
-    newCounts[index] += 1; // Incrementamos en 1 la cantidad del producto que corresponde al índice.
-    setCounts(newCounts); // Actualizamos el estado con el nuevo array de cantidades.
+  // Efecto para inicializar counts cuando cartItems cambia
+  useEffect(() => {
+    const initialCounts = {};
+    cartItems.forEach((item) => {
+      // Usa la cantidad almacenada en Firestore o 1 como valor predeterminado
+      initialCounts[item.id] = item.quantity || 1;
+    });
+    setCounts(initialCounts);
+  }, [cartItems]);
+
+  // Efecto para actualizar Firestore cuando cambian las cantidades
+  useEffect(() => {
+    if (cartItems.length > 0 && Object.keys(counts).length > 0) {
+      const updateFirestoreCart = async () => {
+        try {
+          // Crear array actualizado con las cantidades correctas
+          const updatedCart = cartItems.map((item) => ({
+            ...item,
+            quantity: counts[item.id] || 1,
+          }));
+
+          await updateCartInFirestore(updatedCart);
+          console.log("[updateFirestoreCart] Carrito actualizado en Firestore");
+        } catch (error) {
+          console.error(
+            "[CartPage: updateFirestoreCart] Error al actualizar el carrito en Firestore: ",
+            error
+          );
+        }
+      };
+      updateFirestoreCart();
+    }
+  }, [cartItems, counts]);
+
+  const handleIncrement = (itemId) => {
+    setCounts((prevCounts) => ({
+      ...prevCounts,
+      [itemId]: (prevCounts[itemId] || 1) + 1,
+    }));
   };
   // Función para aumentar la cantidad de un producto en el carrito.
 
-  const handleDecrease = (index) => {
-    const newCounts = [...counts];
-    if (newCounts[index] > 1) {
-      newCounts[index] -= 1;
-      setCounts(newCounts);
+  const handleDecrease = (itemId) => {
+    setCounts((prevCounts) => {
+      const currentCount = prevCounts[itemId] || 1;
+      if (currentCount > 1) {
+        return {
+          ...prevCounts,
+          [itemId]: currentCount - 1,
+        };
+      }
+      return prevCounts;
+    });
+  };
+
+  const handleRemoveFromCart = async (index) => {
+    try {
+      const productId = cartItems[index].id; // Asegúrate de que estás usando el Firestore ID aquí
+      // Eliminar producto de Firestore
+      await removeFromCartInFirestore(productId);
+      // Eliminar producto de React (estado local)
+      removeFromCart(index);
+      setCounts((prevCounts) => {
+        const newCounts = { ...prevCounts };
+        delete newCounts[productId];
+        return newCounts;
+      });
+      console.log("Producto eliminado del carrito y Firestore");
+    } catch (error) {
+      console.error("Error al eliminar producto de Firestore: ", error);
     }
   };
 
@@ -42,8 +107,9 @@ const CartPage = () => {
   }
 
   // Calculamos el total sumando el precio de cada producto multiplicado por la cantidad correspondiente.
-  const totalCompra = cartItems.reduce((total, item, index) => {
-    return total + item.precio * counts[index];
+  const totalCompra = cartItems.reduce((total, item) => {
+    const quantity = counts[item.id] || 1;
+    return total + item.precio * quantity;
   }, 0); // El '0' es el valor inicial para la suma.
 
   // Si el carrito tiene productos, mostramos la lista de items.
@@ -52,7 +118,7 @@ const CartPage = () => {
       <h2>Tu Carrito 🛒</h2>
       <div className="carrito-items">
         {cartItems.map((item, index) => (
-          <div key={index} className="carrito-item">
+          <div key={item.id} className="carrito-item">
             <img
               src={item.imagen}
               alt={item.estilo}
@@ -64,28 +130,28 @@ const CartPage = () => {
               </h3>
               <div className="cantidad">
                 <p>
-                  <b>Cantidad:</b> {counts[index]}
+                  <b>Cantidad:</b> {counts[item.id] || 1}
                 </p>
                 <button
                   className="eliminar-btn"
-                  onClick={() => handleDecrease(index)}
-                  disabled={counts[index] === 1}
+                  onClick={() => handleDecrease(item.id)}
+                  disabled={(counts[item.id] || 1) === 1}
                 >
                   -
                 </button>
                 <button
                   className="agregar-btn"
-                  onClick={() => handleIncrement(index)}
+                  onClick={() => handleIncrement(item.id)}
                 >
                   +
                 </button>
               </div>
 
               <p>
-                <b>Total:</b> ${item.precio * counts[index]}
+                <b>Total:</b> ${item.precio * (counts[item.id] || 1)}
               </p>
               <div className="eliminar-item">
-                <button onClick={() => removeFromCart(index)}>❌</button>
+                <button onClick={() => handleRemoveFromCart(index)}>❌</button>
               </div>
             </div>
           </div>
@@ -94,7 +160,9 @@ const CartPage = () => {
       <p>
         <b>Total de la compra:</b> ${totalCompra}
       </p>
-      <button className="comprar-carrito">Continuar compra</button>
+      <button className="comprar-carrito" onClick={() => navigate("/Checkout")}>
+        Continuar compra
+      </button>
     </div>
   );
 };

@@ -42,6 +42,7 @@ const Destilados = () => {
               imagen={obtenerImagenDestilado(destilado.id)}
               producto={destilado.producto}
               descripcion={destilado.descripcion}
+              id={destilado.id}
             />
           </Link>
         ))}
