@@ -37,14 +37,18 @@ export const removeFromCartInFirestore = async (productId) => {
 };
 
 //Funcion para vaciar el carrito en Firestore
-export const createOrderInFirestore = async (cartItems) => {
+export const createOrderInFirestore = async (cartItems, customerInfo) => {
   try {
+    console.log("[createOrderInFirestore] cartItems:", cartItems);
+    console.log("[createOrderInFirestore] customerInfo:", customerInfo);
+
     const order = {
       items: cartItems.map((item) => ({
         id: item.id,
-        name: item.producto,
-        quantity: item.quantity,
+        name: item.estilo || "Sin Nombre",
+        quantity: item.quantity || 0,
       })),
+      customerInfo: customerInfo || {},
       date: new Date().toISOString(),
     };
     const docRef = await addDoc(collection(BBDD.db, "orders"), order);
