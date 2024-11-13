@@ -3,7 +3,7 @@ import ProductCard from "../ProductCard/ProductCard";
 import { Link } from "react-router-dom";
 import productos from "../../data";
 import { collection, getDocs } from "firebase/firestore";
-import BBDD from "../../Config/firebase";
+import BBDD from "../../Config/firebase.js";
 import { useEffect, useState } from "react";
 
 const Cervezas = () => {
