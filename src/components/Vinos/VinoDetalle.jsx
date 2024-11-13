@@ -3,7 +3,7 @@ import productos from "../../data";
 import "../../App.css";
 import { useEffect, useState } from "react";
 
-import BBDD from "../../Config/firebase";
+import BBDD from "../../Config/firebase.js";
 import { doc, getDoc } from "firebase/firestore";
 
 const VinoDetalle = () => {
